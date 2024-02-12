@@ -12,6 +12,7 @@ import { CheckIcon, ExclamationTriangleIcon } from "@heroicons/react/20/solid";
 import { EventSourceInput } from "@fullcalendar/core/index.js";
 import resourceTimelinePlugin from "@fullcalendar/resource-timeline";
 import multiMonthPlugin from "@fullcalendar/multimonth";
+import GoalCard from "./Components/GoalCard";
 
 interface Event {
   title: string;
@@ -124,31 +125,19 @@ export default function Home() {
       <nav className="flex justify-between mb-12 border-b border-violet-100 p-4">
         <h1 className="font-bold text-2xl text-gray-700">Personal Planner</h1>
       </nav>
-      <div className="flex flex-row  gap-3 mx-20 h-[220px] ">
-        <div className="flex-1 text-center p-4 bg-blue-100 border-2  border-gray-200">
-          <h2 className="font-bold text-lg ">Week 1</h2>
-          <p>Some text goes here.</p>
-          <button className="btn-primary btn  p-2">ADD</button>
-        </div>
-        <div className="flex-1 text-center p-4 bg-green-100 border-2  border-gray-200">
-          <h2 className="font-bold text-lg">Week 2</h2>
-          <p>Some text goes here.</p>
-          <button className="btn-primary btn  p-2">ADD</button>
-        </div>
-        <div className="flex-1 text-center p-4 bg-red-100 border-2  border-gray-200">
-          <h2 className="font-bold text-lg">Week  3</h2>
-          <p>Some text goes here.</p>
-          <button className="btn-primary btn  p-2">ADD</button>
-        </div>
-        <div className="flex-1 text-center p-4 bg-yellow-100 border-2  border-gray-200">
-          <h2 className="font-bold text-lg">Week  4</h2>
-          <p>Some text goes here.</p>
-          <button className="btn-primary btn  p-2">ADD</button>
-        </div>
+      <div className="relative flex w-full h-20 gap-3 mx-20 ">
+      <div className="absolute w-80 h-24 " style={{ left: '10%' }}><GoalCard /></div>
+      <div className="absolute  w-80 h-24 " style={{ left: '30%' }}><GoalCard /></div>
+      <div className="absolute  w-80 h-24 " style={{ left: '50%' }}><GoalCard /></div>
+      <div className="absolute  w-80 h-24 " style={{ left: '70%' }}><GoalCard /></div>
+       
+       
+       
+        
       </div>
-      <main className="flex max-h-screen flex-col ml-96 items-center p-5">
-        <div className="grid grid-cols-20">
-          <div className="col-span-20">
+      <main className="flex  max-h-screen flex-col items-center ">
+        <div className=" ml-[54rem] grid grid-cols-70">
+          <div className="col-span-30">
             <FullCalendar
               plugins={[
                 resourceTimelinePlugin,
