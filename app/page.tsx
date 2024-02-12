@@ -126,10 +126,10 @@ export default function Home() {
         <h1 className="font-bold text-2xl text-gray-700">Personal Planner</h1>
       </nav>
       <div className="relative flex w-full h-20 gap-3 mx-20 ">
-      <div className="absolute w-80 h-24 " style={{ left: '10%' }}><GoalCard /></div>
-      <div className="absolute  w-80 h-24 " style={{ left: '30%' }}><GoalCard /></div>
-      <div className="absolute  w-80 h-24 " style={{ left: '50%' }}><GoalCard /></div>
-      <div className="absolute  w-80 h-24 " style={{ left: '70%' }}><GoalCard /></div>
+      <div className="absolute w-80 h-24 " style={{ left: '5%' }}><GoalCard title={"Week one"}/></div>
+      <div className="absolute  w-80 h-24 " style={{ left: '27%' }}><GoalCard title={"Week two"} /></div>
+      <div className="absolute  w-80 h-24 " style={{ left: '48%' }}><GoalCard title={"Week three"} /></div>
+      <div className="absolute  w-80 h-24 " style={{ left: '70%' }}><GoalCard title={"Week four"} /></div>
        
        
        
