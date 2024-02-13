@@ -23,6 +23,9 @@ interface Event {
 }
 
 export default function Home() {
+  const [MonthView, setMonthView] = useState(true);
+  const [WeekView, setWeekView] = useState(false);
+  const [DayView, setDayView] = useState(false);
   const [events, setEvents] = useState([
     { title: "event 1", id: "1" },
     { title: "event 2", id: "2" },
@@ -42,6 +45,37 @@ export default function Home() {
   });
 
   useEffect(() => {
+    const MonthButton = document.querySelector(".fc-dayGridMonth-button");
+    const MonthViewHandleClick = () => {
+      setMonthView(true);
+      setWeekView(false);
+      setDayView(false);
+    };
+
+    // Attach the event listener
+    if (MonthButton)
+      MonthButton.addEventListener("click", MonthViewHandleClick);
+
+    const WeekButton = document.querySelector(".fc-timeGridWeek-button");
+    const WeekViewHandleClick = () => {
+      setMonthView(false);
+      setWeekView(true);
+      setDayView(false);
+    };
+
+    // Attach the event listener
+    if (WeekButton) WeekButton.addEventListener("click", WeekViewHandleClick);
+
+    const DayButton = document.querySelector(".fc-timeGridDay-button");
+    const DayViewHandleClick = () => {
+      setMonthView(false);
+      setWeekView(false);
+      setDayView(true);
+    };
+
+    // Attach the event listener
+    if (DayButton) DayButton.addEventListener("click", DayViewHandleClick);
+
     let draggableEl = document.getElementById("draggable-el");
     if (draggableEl) {
       new Draggable(draggableEl, {
@@ -126,35 +160,85 @@ export default function Home() {
       <nav className="flex justify-between mb-12 border-b border-violet-100 p-4">
         <h1 className="font-bold text-2xl text-gray-700">Personal Planner</h1>
       </nav>
-      <div className="relative flex w-full h-20 gap-3 mx-20 ">
-        <div className="absolute w-80 h-50 " style={{ left: "5%" }}>
-          <GoalCard title={"Week one"} />
+      {MonthView && (
+        <div className="relative flex w-full h-20 gap-3 mx-20 ">
+          <div className="absolute w-80 h-50 " style={{ left: "5%" }}>
+            <GoalCard title={"Week one"} />
+          </div>
+          <div className="absolute  w-80 h-50 " style={{ left: "27%" }}>
+            <GoalCard title={"Week two"} />
+          </div>
+          <div className="absolute  w-80 h-50 " style={{ left: "48%" }}>
+            <GoalCard title={"Week three"} />
+          </div>
+          <div className="absolute  w-80 h-50 " style={{ left: "70%" }}>
+            <GoalCard title={"Week four"} />
+          </div>
         </div>
-        <div className="absolute  w-80 h-50 " style={{ left: "27%" }}>
-          <GoalCard title={"Week two"} />
+      )}
+      {WeekView && (
+        <div className="relative flex w-full h-20 gap-3  ">
+          <div className="absolute w-60 h-50 " style={{ left: "5%" }}>
+            <GoalCard title={"Day one"} />
+          </div>
+          <div className="absolute  w-60 h-50 " style={{ left: "18%" }}>
+            <GoalCard title={"Day two"} />
+          </div>
+          <div className="absolute  w-60 h-50 " style={{ left: "31%" }}>
+            <GoalCard title={"Day three"} />
+          </div>
+          <div className="absolute  w-60 h-50 " style={{ left: "44%" }}>
+            <GoalCard title={"Day four"} />
+          </div>
+          <div className="absolute  w-60 h-50 " style={{ left: "57%" }}>
+            <GoalCard title={"Day five"} />
+          </div>
+          <div className="absolute  w-60 h-50 " style={{ left: "70%" }}>
+            <GoalCard title={"Day six"} />
+          </div>
+          <div className="absolute  w-60 h-50 " style={{ left: "83%" }}>
+            <GoalCard title={"Day seven"} />
+          </div>
         </div>
-        <div className="absolute  w-80 h-50 " style={{ left: "48%" }}>
-          <GoalCard title={"Week three"} />
-        </div>
-        <div className="absolute  w-80 h-50 " style={{ left: "70%" }}>
-          <GoalCard title={"Week four"} />
-        </div>
-      </div>
+      )}
 
       <main className="flex flex-row max-h-screen">
-        <div className="flex flex-row gap-3 pt-5 ml-[10rem] ">
-          <div className="flex gap-3 flex-col">
-            {" "}
-            <GoalCategoryCard color="bg-[#76a1f1]" title={"Career"} />
-            <GoalCategoryCard color="bg-[#91eead]" title={"Health"} />
-          </div>
-          <div className="flex gap-3 flex-col">
-            {" "}
-            <GoalCategoryCard color="bg-[#fda66c]" title={"Relationship"} />
-            <GoalCategoryCard color="bg-[#ff00ff]"title={"Entertainment"} />
+        <div className="flex flex-col">
+          <div className="flex flex-row gap-3 pt-5 ml-[10rem] ">
+            <div className="flex gap-3 flex-col">
+              {" "}
+              <GoalCategoryCard color="bg-[#76a1f1]" title={"Career"} />
+              <GoalCategoryCard color="bg-[#91eead]" title={"Health"} />
+            </div>
+            <div className="flex gap-3 flex-col">
+              {" "}
+              <GoalCategoryCard color="bg-[#fda66c]" title={"Relationship"} />
+              <GoalCategoryCard color="bg-[#ff00ff]" title={"Entertainment"} />
+            </div>
+
             
           </div>
+          {DayView && (
+            <>
+              <div className="card  ml-[10rem] w-100 bg-primary mt-10 text-primary-content">
+                <div className="card-body">
+                  <h2 className="card-title">Card title!</h2>
+                  <p>previous uncked goals</p>
+                </div>
+              </div>
+              <div className="card  ml-[10rem] w-100 bg-primary mt-10 text-primary-content">
+                <div className="card-body">
+                  <h2 className="card-title">Card title!</h2>
+                  <p>Important days ahead</p>
+                </div>
+              </div>
+              </>
+              
+              
+
+            )}
         </div>
+
         <div className="flex flex-col  pt-10 items-center ">
           <div className=" ml-[10rem] grid grid-cols-70">
             <div className="col-span-30">
@@ -171,7 +255,7 @@ export default function Home() {
                   center: "title",
                   right: "timeGridDay,dayGridMonth,timeGridWeek,multiMonthYear",
                 }}
-                initialView="timeGridWeek"
+                initialView="dayGridMonth"
                 events={allEvents as EventSourceInput}
                 nowIndicator={true}
                 editable={true}
