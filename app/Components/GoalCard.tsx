@@ -1,32 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import GoalItem from "./GoalItem";
 
+import GoalCategoryCard from "./GoalCategoryCard";
 function GoalCard(props) {
-    const [inputText, setInputText] = useState("");
-    const [goals, setGoal] = useState([]);
-   
-
-    function handleChange(event) {
-        setInputText(event.target.value);
-    }
-
-   
-    function handleClick(event) {
-        event.preventDefault();
-        setGoal((prevGoals) => {
-          return [...prevGoals, inputText];
-        });
-        setInputText("");
-      }
-
-    function deleteItem(id) {
-        setGoal((prevGoals) => {
-          return prevGoals.filter((goals, index) => {
-            return index !== id;
-          });
-        });
-      }
+    
     
 
     
@@ -34,47 +11,28 @@ function GoalCard(props) {
 
 
   return (
-    <div tabIndex={0} className="  z-30 absolute collapse bg-[#ee9191]  ">
+    <div tabIndex={0} className="  z-30   collapse bg-[#fdf2bf]  ">
       <input type="checkbox" />
       <div className="collapse-title">{props.title}</div>
-      <div className=" z-30  collapse-content">
-      <ul className="list-disc  pb-5"> 
-            {goals.map((goal, index) => (
-               
-                <GoalItem
-                id={index}
-                text={goal}
-                key={index}
-                onChecked={deleteItem}
-                />
-                       
+      <div className=" container z-30  collapse-content">
+      <div className="flex flex-col w-70 gap-3  ">
+          
+            {" "}
+            <GoalCategoryCard color="bg-[#76a1f1]" title={"Career"} />
+            <GoalCategoryCard color="bg-[#91eead]" title={"Health"} />
+          
+          
+            {" "}
+            <GoalCategoryCard color="bg-[#fda66c]" title={"Relationship"} />
+            <GoalCategoryCard color="bg-[#ff00ff]"title={"Entertainment"} />
+            
+          
+        </div>
+      
+
+
 
        
-                
-              
-               
-               
-              
-            ))}
-            
-          </ul>
-
-
-
-        {props.goals}
-        <div className="flex flex-row gap-1">
-          <form>
-            <input
-              type="text"
-              placeholder="Type here"
-              className="input input-bordered w-full max-w-xs"
-              onChange={handleChange}
-              name="Goal"
-              value={inputText}
-            />
-            <button onClick={handleClick} className="btn btn-sm m-2 ">ADD</button>
-          </form>
-        </div>
       </div>
     </div>
   );
