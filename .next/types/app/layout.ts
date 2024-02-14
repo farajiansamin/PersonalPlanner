@@ -1,4 +1,4 @@
-// File: C:\Users\New Student\Desktop\Web projects\Planner- Goal Settting\PersonalPlanner\app\layout.tsx
+// File: C:\Users\New Student\Desktop\Web projects\Planner\PersonalPlanner\app\layout.tsx
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

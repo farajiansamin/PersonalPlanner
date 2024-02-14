@@ -163,23 +163,23 @@ export default function Home() {
       {MonthView && (
         <div className="relative flex w-full h-20 gap-3 mx-20 ">
           <div className="absolute w-80 h-50 " style={{ left: "5%" }}>
-            <GoalCard title={"Week one"} />
+          <GoalCategoryCard color="bg-[#76a1f1]" title={"Career"} />
           </div>
           <div className="absolute  w-80 h-50 " style={{ left: "27%" }}>
-            <GoalCard title={"Week two"} />
+          <GoalCategoryCard color="bg-[#91eead]" title={"Health"} />
           </div>
           <div className="absolute  w-80 h-50 " style={{ left: "48%" }}>
-            <GoalCard title={"Week three"} />
+          <GoalCategoryCard color="bg-[#fda66c]" title={"Relationship"} />
           </div>
           <div className="absolute  w-80 h-50 " style={{ left: "70%" }}>
-            <GoalCard title={"Week four"} />
+          <GoalCategoryCard color="bg-[#ff00ff]" title={"Entertainment"} />
           </div>
         </div>
       )}
       {WeekView && (
         <div className="relative flex w-full h-20 gap-3  ">
           <div className="absolute w-60 h-50 " style={{ left: "5%" }}>
-            <GoalCard title={"Day one"} />
+            <GoalCard  title={"Day one"} />
           </div>
           <div className="absolute  w-60 h-50 " style={{ left: "18%" }}>
             <GoalCard title={"Day two"} />
@@ -207,13 +207,13 @@ export default function Home() {
           <div className="flex flex-row gap-3 pt-5 ml-[10rem] ">
             <div className="flex gap-3 flex-col">
               {" "}
-              <GoalCategoryCard color="bg-[#76a1f1]" title={"Career"} />
-              <GoalCategoryCard color="bg-[#91eead]" title={"Health"} />
+              <GoalCard color="bg-[#76a1f1]" title={"Week One"} />
+              <GoalCard color="bg-[#91eead]" title={"Week Two"} />
             </div>
             <div className="flex gap-3 flex-col">
               {" "}
-              <GoalCategoryCard color="bg-[#fda66c]" title={"Relationship"} />
-              <GoalCategoryCard color="bg-[#ff00ff]" title={"Entertainment"} />
+              <GoalCard color="bg-[#fda66c]" title={"Week Three"} />
+              <GoalCard color="bg-[#ff00ff]" title={"Week Four"} />
             </div>
 
             

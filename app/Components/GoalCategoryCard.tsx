@@ -28,10 +28,11 @@ const GoalCategoryCard = (props) => {
         });
       }
   return (
-    <div className={`card  ${props.color} shadow-xl`}>
-  <div className="card-body gap-0 p-[1rem]">
-    <h2 className="card-title">{props.title}</h2>
-    <ul className="list-disc  "> 
+    <div tabIndex={0} className={`z-30  ${props.color} collapse `}>
+      <input type="checkbox" />
+      <div className="collapse-title">{props.title}</div>
+      <div className=" container z-30  collapse-content">
+      <ul className="list-disc  "> 
             {goals.map((goal, index) => (
                
                 <GoalItem
@@ -65,9 +66,42 @@ const GoalCategoryCard = (props) => {
             <button onClick={handleClick} className="btn btn-sm m-1 ">ADD</button>
           </form>
         </div>
+      
+      
+
+
+
+       
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
-  </div>
-</div>
   )
 }
 
