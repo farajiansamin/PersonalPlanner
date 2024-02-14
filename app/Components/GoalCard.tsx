@@ -14,8 +14,8 @@ function GoalCard(props) {
     <div tabIndex={0} className="  z-30   collapse bg-[#fdf2bf]  ">
       <input type="checkbox" />
       <div className="collapse-title">{props.title}</div>
-      <div className=" container z-30  collapse-content">
-      <div className="flex flex-col w-70 gap-3  ">
+      <div className=" container z-30  ">
+      <div className="flex flex-col w-70 gap-3 m-5 ">
           
             {" "}
             <GoalCategoryCard color="bg-[#76a1f1]" title={"Career"} />

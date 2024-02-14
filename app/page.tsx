@@ -160,64 +160,64 @@ export default function Home() {
       <nav className="flex justify-between mb-12 border-b border-violet-100 p-4">
         <h1 className="font-bold text-2xl text-gray-700">Personal Planner</h1>
       </nav>
-      {MonthView && (
-        <div className="relative flex w-full h-20 gap-3 mx-20 ">
-          <div className="absolute w-80 h-50 " style={{ left: "5%" }}>
+
+      <div className="relative flex w-full h-20 gap-3 mx-20 ">
+        <div className="absolute w-80 h-50 " style={{ left: "5%" }}>
           <GoalCategoryCard color="bg-[#76a1f1]" title={"Career"} />
-          </div>
-          <div className="absolute  w-80 h-50 " style={{ left: "27%" }}>
+        </div>
+        <div className="absolute  w-80 h-50 " style={{ left: "27%" }}>
           <GoalCategoryCard color="bg-[#91eead]" title={"Health"} />
-          </div>
-          <div className="absolute  w-80 h-50 " style={{ left: "48%" }}>
+        </div>
+        <div className="absolute  w-80 h-50 " style={{ left: "48%" }}>
           <GoalCategoryCard color="bg-[#fda66c]" title={"Relationship"} />
-          </div>
-          <div className="absolute  w-80 h-50 " style={{ left: "70%" }}>
+        </div>
+        <div className="absolute  w-80 h-50 " style={{ left: "70%" }}>
           <GoalCategoryCard color="bg-[#ff00ff]" title={"Entertainment"} />
-          </div>
         </div>
-      )}
-      {WeekView && (
-        <div className="relative flex w-full h-20 gap-3  ">
-          <div className="absolute w-60 h-50 " style={{ left: "5%" }}>
-            <GoalCard  title={"Day one"} />
-          </div>
-          <div className="absolute  w-60 h-50 " style={{ left: "18%" }}>
-            <GoalCard title={"Day two"} />
-          </div>
-          <div className="absolute  w-60 h-50 " style={{ left: "31%" }}>
-            <GoalCard title={"Day three"} />
-          </div>
-          <div className="absolute  w-60 h-50 " style={{ left: "44%" }}>
-            <GoalCard title={"Day four"} />
-          </div>
-          <div className="absolute  w-60 h-50 " style={{ left: "57%" }}>
-            <GoalCard title={"Day five"} />
-          </div>
-          <div className="absolute  w-60 h-50 " style={{ left: "70%" }}>
-            <GoalCard title={"Day six"} />
-          </div>
-          <div className="absolute  w-60 h-50 " style={{ left: "83%" }}>
-            <GoalCard title={"Day seven"} />
-          </div>
-        </div>
-      )}
+      </div>
+
+      
 
       <main className="flex flex-row max-h-screen">
         <div className="flex flex-col">
-          <div className="flex flex-row gap-3 pt-5 ml-[10rem] ">
-            <div className="flex gap-3 flex-col">
-              {" "}
-              <GoalCard color="bg-[#76a1f1]" title={"Week One"} />
-              <GoalCard color="bg-[#91eead]" title={"Week Two"} />
+          {MonthView && (
+            <div className="flex flex-row gap-3 pt-10 ml-[10rem] ">
+              <div className="flex gap-3 flex-col">
+                {" "}
+                <GoalCard color="bg-[#76a1f1]" title={"Week One"} />
+                <GoalCard color="bg-[#91eead]" title={"Week Two"} />
+              </div>
+              <div className="flex gap-3 flex-col">
+                {" "}
+                <GoalCard color="bg-[#fda66c]" title={"Week Three"} />
+                <GoalCard color="bg-[#ff00ff]" title={"Week Four"} />
+              </div>
             </div>
-            <div className="flex gap-3 flex-col">
-              {" "}
-              <GoalCard color="bg-[#fda66c]" title={"Week Three"} />
-              <GoalCard color="bg-[#ff00ff]" title={"Week Four"} />
+          )}
+          {WeekView && (
+            <div className="flex flex-row gap-3 pt-10 ml-[10rem] ">
+              <div className="flex gap-3 flex-col">
+                {" "}
+                <GoalCard color="bg-[#76a1f1]" title={"Day one"} />
+                <GoalCard color="bg-[#91eead]" title={"Day two"} />
+              </div>
+              <div className="flex gap-3 flex-col">
+                {" "}
+                <GoalCard color="bg-[#fda66c]" title={"Day Three"} />
+                <GoalCard color="bg-[#ff00ff]" title={"Day Four"} />
+              </div>
+              <div className="flex gap-3 flex-col">
+                {" "}
+                <GoalCard color="bg-[#fda66c]" title={"Day five"} />
+                <GoalCard color="bg-[#ff00ff]" title={"Day six"} />
+              </div>
             </div>
+          )}
+          
 
-            
-          </div>
+
+
+
           {DayView && (
             <>
               <div className="card  ml-[10rem] w-100 bg-primary mt-10 text-primary-content">
@@ -232,11 +232,8 @@ export default function Home() {
                   <p>Important days ahead</p>
                 </div>
               </div>
-              </>
-              
-              
-
-            )}
+            </>
+          )}
         </div>
 
         <div className="flex flex-col  pt-10 items-center ">

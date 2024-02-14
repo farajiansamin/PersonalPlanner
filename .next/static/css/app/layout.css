@@ -1642,6 +1642,9 @@ details.collapse summary::-webkit-details-marker {
 .m-1 {
   margin: 0.25rem;
 }
+.m-5 {
+  margin: 1.25rem;
+}
 .mx-20 {
   margin-left: 5rem;
   margin-right: 5rem;
@@ -1751,9 +1754,6 @@ details.collapse summary::-webkit-details-marker {
 .justify-between {
   justify-content: space-between;
 }
-.gap-0 {
-  gap: 0px;
-}
 .gap-1 {
   gap: 0.25rem;
 }
@@ -1841,9 +1841,6 @@ details.collapse summary::-webkit-details-marker {
   --tw-bg-opacity: 0.75;
 }
 .p-4 {
-  padding: 1rem;
-}
-.p-\[1rem\] {
   padding: 1rem;
 }
 .px-3 {
