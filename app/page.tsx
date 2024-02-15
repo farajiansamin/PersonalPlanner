@@ -181,13 +181,13 @@ export default function Home() {
       <main className="flex flex-row max-h-screen">
         <div className="flex flex-col">
           {MonthView && (
-            <div className="flex flex-row gap-3 pt-10 ml-[10rem] ">
-              <div className="flex gap-3 flex-col">
+            <div className="flex flex-row gap-5 pt-10 ml-[10rem] ">
+              <div className="flex gap-5 flex-col">
                 {" "}
                 <GoalCard color="bg-[#76a1f1]" title={"Week One"} />
                 <GoalCard color="bg-[#91eead]" title={"Week Two"} />
               </div>
-              <div className="flex gap-3 flex-col">
+              <div className="flex gap-5 flex-col">
                 {" "}
                 <GoalCard color="bg-[#fda66c]" title={"Week Three"} />
                 <GoalCard color="bg-[#ff00ff]" title={"Week Four"} />
