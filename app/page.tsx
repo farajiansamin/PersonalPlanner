@@ -195,22 +195,21 @@ export default function Home() {
             </div>
           )}
           {WeekView && (
-            <div className="flex flex-row gap-3 pt-10 ml-[10rem] ">
-              <div className="flex gap-3 flex-col">
+            <div className="flex flex-col gap-3 pt-10 ml-[15rem] ">
+              
                 {" "}
                 <GoalCard color="bg-[#76a1f1]" title={"Day one"} />
                 <GoalCard color="bg-[#91eead]" title={"Day two"} />
-              </div>
-              <div className="flex gap-3 flex-col">
+              
                 {" "}
                 <GoalCard color="bg-[#fda66c]" title={"Day Three"} />
                 <GoalCard color="bg-[#ff00ff]" title={"Day Four"} />
-              </div>
-              <div className="flex gap-3 flex-col">
+           
+              
                 {" "}
                 <GoalCard color="bg-[#fda66c]" title={"Day five"} />
                 <GoalCard color="bg-[#ff00ff]" title={"Day six"} />
-              </div>
+             
             </div>
           )}
           
