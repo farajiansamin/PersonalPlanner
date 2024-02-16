@@ -184,13 +184,13 @@ export default function Home() {
             <div className="flex flex-row gap-5 pt-10 ml-[10rem] ">
               <div className="flex gap-5 flex-col">
                 {" "}
-                <GoalCard color="bg-[#76a1f1]" title={"Week One"} />
-                <GoalCard color="bg-[#91eead]" title={"Week Two"} />
+                <GoalCard  type={"week"} color="bg-[#76a1f1]" title={"Week One"} />
+                <GoalCard  type={"week"}  color="bg-[#91eead]" title={"Week Two"} />
               </div>
               <div className="flex gap-5 flex-col">
                 {" "}
-                <GoalCard color="bg-[#fda66c]" title={"Week Three"} />
-                <GoalCard color="bg-[#ff00ff]" title={"Week Four"} />
+                <GoalCard type={"week"}  color="bg-[#fda66c]" title={"Week Three"} />
+                <GoalCard  type={"week"} color="bg-[#ff00ff]" title={"Week Four"} />
               </div>
             </div>
           )}
