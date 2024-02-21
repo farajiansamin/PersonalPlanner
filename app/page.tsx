@@ -6,7 +6,8 @@ import interactionPlugin, {
   DropArg,
 } from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState, useRef } from "react";
+
 import { Dialog, Transition } from "@headlessui/react";
 import { CheckIcon, ExclamationTriangleIcon } from "@heroicons/react/20/solid";
 import { EventSourceInput } from "@fullcalendar/core/index.js";
@@ -14,6 +15,7 @@ import resourceTimelinePlugin from "@fullcalendar/resource-timeline";
 import multiMonthPlugin from "@fullcalendar/multimonth";
 import GoalCard from "./Components/GoalCard";
 import GoalCategoryCard from "./Components/GoalCategoryCard";
+import NotCompletedGoals from "./Components/NotCompletedGoals"
 
 interface Event {
   title: string;
@@ -26,13 +28,18 @@ export default function Home() {
   const [MonthView, setMonthView] = useState(true);
   const [WeekView, setWeekView] = useState(false);
   const [DayView, setDayView] = useState(false);
-  const [events, setEvents] = useState([
-    { title: "event 1", id: "1" },
-    { title: "event 2", id: "2" },
-    { title: "event 3", id: "3" },
-    { title: "event 4", id: "4" },
-    { title: "event 5", id: "5" },
-  ]);
+  const [currentViewDate, setCurrentViewDate] = useState("");
+  const calendarRef = useRef(null);
+
+  // State for storing the extracted year, month, and date
+  const [dateDetails, setDateDetails] = useState({
+    year: "",
+    month: "",
+    date: "",
+    weekOfMonth: "",
+    dayOfWeek: "",
+  });
+
   const [allEvents, setAllEvents] = useState<Event[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -44,7 +51,68 @@ export default function Home() {
     id: 0,
   });
 
+  const updateCurrentViewDate = () => {
+    if (calendarRef.current) {
+      const calendarApi = calendarRef.current.getApi();
+      const currentDate = calendarApi.getDate();
+      // Use local date components to avoid time zone issues with toISOString()
+      const year = currentDate.getFullYear().toString();
+      const month = (currentDate.getMonth() + 1).toString().padStart(2, "0"); // +1 because getMonth() is 0-indexed
+      const date = currentDate.getDate().toString().padStart(2, "0");
+      const formattedDate = `${year}-${month}-${date}`;
+
+      // Calculate the week of the month
+      const firstDayOfMonth = new Date(year, month - 1, 1); // Adjust for 0-index month
+      const diffInDays = Math.floor(
+        (currentDate - firstDayOfMonth) / (24 * 60 * 60 * 1000)
+      );
+      const weekOfMonth = Math.ceil(
+        (diffInDays + firstDayOfMonth.getDay()) / 7
+      );
+
+      // Determine the day of the week, adjusting from 0 (Sunday) to 6 (Saturday) to 1 (Monday) to 7 (Sunday)
+      const dayOfWeek = currentDate.getDay();
+      const adjustedDayOfWeek = dayOfWeek === 0 ? 7 : dayOfWeek;
+
+      // Update state with the formatted date, extracted details, week of the month, and day of the week
+      setCurrentViewDate(formattedDate);
+      setDateDetails({
+        year,
+        month,
+        date,
+        weekOfMonth,
+        dayOfWeek: adjustedDayOfWeek,
+      });
+
+      // Optionally, log the current view date, extracted details, week of the month, and day of the week
+      console.log("Current View Date:", formattedDate);
+      console.log(
+        "Extracted Year:",
+        year,
+        "Month:",
+        month,
+        "Date:",
+        date,
+        "Week of Month:",
+        weekOfMonth,
+        "Day of Week:",
+        adjustedDayOfWeek
+      );
+    }
+  };
+
+  //const getWeekOfMonth = (date) => {
+  // const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+  // const firstDayOfWeek = firstDayOfMonth.getDay(); // get day of week where 0 is Sunday
+  // const offsetDate = date.getDate() + firstDayOfWeek - 1; // calculate offset
+  // return Math.floor(offsetDate / 7) + 1; // calculate week number
+  // };
+
   useEffect(() => {
+    updateCurrentViewDate();
+    const titleElement = document.getElementById("fc-dom-1");
+    console.log(titleElement);
+
     const MonthButton = document.querySelector(".fc-dayGridMonth-button");
     const MonthViewHandleClick = () => {
       setMonthView(true);
@@ -161,70 +229,197 @@ export default function Home() {
         <h1 className="font-bold text-2xl text-gray-700">Personal Planner</h1>
       </nav>
 
-      <div className="relative flex w-full h-20 gap-3 mx-20 ">
-        <div className="absolute w-80 h-50 " style={{ left: "5%" }}>
-          <GoalCategoryCard color="bg-[#76a1f1]" title={"Career"} />
+      <div className=" flex w-full h-20 gap-3 mx-20 ">
+        <div className=" w-80 h-50 ">
+          <GoalCategoryCard
+            month={dateDetails.month}
+            week={dateDetails.weekOfMonth}
+            day={dateDetails.dayOfWeek}
+            color="bg-[#76a1f1]"
+            title={"Career"}
+            type={
+              WeekView
+                ? "Weekly"
+                : MonthView
+                ? "Monthly"
+                : DayView
+                ? "Daily"
+                : undefined
+            }
+          />
         </div>
-        <div className="absolute  w-80 h-50 " style={{ left: "27%" }}>
-          <GoalCategoryCard color="bg-[#91eead]" title={"Health"} />
+        <div className=" w-80 h-50 ">
+          <GoalCategoryCard
+            month={dateDetails.month}
+            week={dateDetails.weekOfMonth}
+            day={dateDetails.dayOfWeek}
+            color="bg-[#91eead]"
+            title={"Health"}
+            type={
+              WeekView
+                ? "Weekly"
+                : MonthView
+                ? "Monthly"
+                : DayView
+                ? "Daily"
+                : undefined
+            }
+          />
         </div>
-        <div className="absolute  w-80 h-50 " style={{ left: "48%" }}>
-          <GoalCategoryCard color="bg-[#fda66c]" title={"Relationship"} />
+        <div className=" w-80 h-50 ">
+          <GoalCategoryCard
+            month={dateDetails.month}
+            week={dateDetails.weekOfMonth}
+            day={dateDetails.dayOfWeek}
+            color="bg-[#fda66c]"
+            title={"Relationship"}
+            type={
+              WeekView
+                ? "Weekly"
+                : MonthView
+                ? "Monthly"
+                : DayView
+                ? "Daily"
+                : undefined
+            }
+          />
         </div>
-        <div className="absolute  w-80 h-50 " style={{ left: "70%" }}>
-          <GoalCategoryCard color="bg-[#ff00ff]" title={"Entertainment"} />
+        <div className=" w-80 h-50 ">
+          <GoalCategoryCard
+            month={dateDetails.month}
+            week={dateDetails.weekOfMonth}
+            day={dateDetails.dayOfWeek}
+            color="bg-[#ff00ff]"
+            title={"Entertainment"}
+            type={
+              WeekView
+                ? "Weekly"
+                : MonthView
+                ? "Monthly"
+                : DayView
+                ? "Daily"
+                : undefined
+            }
+          />
         </div>
       </div>
-
-      
 
       <main className="flex flex-row max-h-screen">
         <div className="flex flex-col">
           {MonthView && (
-            <div className="flex flex-row gap-5 pt-10 ml-[10rem] ">
+            <div className="flex flex-row gap-5 pt-10 ml-[5rem] ">
               <div className="flex gap-5 flex-col">
                 {" "}
-                <GoalCard  type={"week"} color="bg-[#76a1f1]" title={"Week One"} />
-                <GoalCard  type={"week"}  color="bg-[#91eead]" title={"Week Two"} />
+                <GoalCard
+                  month={dateDetails.month}
+                  week={dateDetails.weekOfMonth}
+                  day={dateDetails.dayOfWeek}
+                  type={"Weekly"}
+                  color="bg-[#76a1f1]"
+                  title={"Week One"}
+                />
+                <GoalCard
+                  month={dateDetails.month}
+                  week={dateDetails.weekOfMonth}
+                  day={dateDetails.dayOfWeek}
+                  type={"Weekly"}
+                  color="bg-[#91eead]"
+                  title={"Week Two"}
+                />
               </div>
               <div className="flex gap-5 flex-col">
                 {" "}
-                <GoalCard type={"week"}  color="bg-[#fda66c]" title={"Week Three"} />
-                <GoalCard  type={"week"} color="bg-[#ff00ff]" title={"Week Four"} />
+                <GoalCard
+                  month={dateDetails.month}
+                  week={dateDetails.weekOfMonth}
+                  day={dateDetails.dayOfWeek}
+                  type={"Weekly"}
+                  color="bg-[#fda66c]"
+                  title={"Week Three"}
+                />
+                <GoalCard
+                  month={dateDetails.month}
+                  week={dateDetails.weekOfMonth}
+                  day={dateDetails.dayOfWeek}
+                  type={"Weekly"}
+                  color="bg-[#ff00ff]"
+                  title={"Week Four"}
+                />
               </div>
             </div>
           )}
           {WeekView && (
             <div className="flex flex-col gap-3 pt-10 ml-[15rem] ">
-              
-                {" "}
-                <GoalCard color="bg-[#76a1f1]" title={"Day one"} />
-                <GoalCard color="bg-[#91eead]" title={"Day two"} />
-              
-                {" "}
-                <GoalCard color="bg-[#fda66c]" title={"Day Three"} />
-                <GoalCard color="bg-[#ff00ff]" title={"Day Four"} />
-           
-              
-                {" "}
-                <GoalCard color="bg-[#fda66c]" title={"Day five"} />
-                <GoalCard color="bg-[#ff00ff]" title={"Day six"} />
-             
+              {" "}
+              <GoalCard
+                month={dateDetails.month}
+                week={dateDetails.weekOfMonth}
+                dayOfWeek={dateDetails.dayOfWeek}
+                type={"Daily"}
+                color="bg-[#76a1f1]"
+                title={"Day One"}
+              />
+              <GoalCard
+                month={dateDetails.month}
+                week={dateDetails.weekOfMonth}
+                dayOfWeek={dateDetails.dayOfWeek}
+                date={dateDetails.date}
+                type={"Daily"}
+                color="bg-[#76a1f1]"
+                title={"Day Two"}
+              />{" "}
+              <GoalCard
+                month={dateDetails.month}
+                week={dateDetails.weekOfMonth}
+                dayOfWeek={dateDetails.dayOfWeek}
+                date={dateDetails.date}
+                type={"Daily"}
+                color="bg-[#76a1f1]"
+                title={"Day Three"}
+              />
+              <GoalCard
+                month={dateDetails.month}
+                week={dateDetails.weekOfMonth}
+                date={dateDetails.date}
+                dayOfWeek={dateDetails.dayOfWeek}
+                type={"Daily"}
+                color="bg-[#76a1f1]"
+                title={"Day Four"}
+              />{" "}
+              <GoalCard
+                month={dateDetails.month}
+                week={dateDetails.weekOfMonth}
+                date={dateDetails.date}
+                dayOfWeek={dateDetails.dayOfWeek}
+                type={"Daily"}
+                color="bg-[#76a1f1]"
+                title={"Day Five"}
+              />
+              <GoalCard
+                month={dateDetails.month}
+                week={dateDetails.weekOfMonth}
+                date={dateDetails.date}
+                dayOfWeek={dateDetails.dayOfWeek}
+                type={"Daily"}
+                color="bg-[#76a1f1]"
+                title={"Day Six"}
+              />
+               <GoalCard
+                month={dateDetails.month}
+                week={dateDetails.weekOfMonth}
+                date={dateDetails.date}
+                dayOfWeek={dateDetails.dayOfWeek}
+                type={"Daily"}
+                color="bg-[#76a1f1]"
+                title={"Day Seven"}
+              />
             </div>
           )}
-          
-
-
-
 
           {DayView && (
             <>
-              <div className="card  ml-[10rem] w-100 bg-primary mt-10 text-primary-content">
-                <div className="card-body">
-                  <h2 className="card-title">Card title!</h2>
-                  <p>previous uncked goals</p>
-                </div>
-              </div>
+             <NotCompletedGoals week={dateDetails.weekOfMonth} />
+              
               <div className="card  ml-[10rem] w-100 bg-primary mt-10 text-primary-content">
                 <div className="card-body">
                   <h2 className="card-title">Card title!</h2>
@@ -236,9 +431,10 @@ export default function Home() {
         </div>
 
         <div className="flex flex-col  pt-10 items-center ">
-          <div className=" ml-[10rem] grid grid-cols-70">
+          <div className=" ml-[4rem] grid grid-cols-70">
             <div className="col-span-30">
               <FullCalendar
+                ref={calendarRef}
                 plugins={[
                   resourceTimelinePlugin,
                   dayGridPlugin,
@@ -261,6 +457,7 @@ export default function Home() {
                 dateClick={handleDateClick}
                 drop={(data) => addEvent(data)}
                 eventClick={(data) => handleDeleteModal(data)}
+                datesSet={() => updateCurrentViewDate()}
               />
             </div>
           </div>
